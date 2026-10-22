@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DOMBYRA — қазақ домбырасының тарихы, күйшілері және музыкасы туралы шағын цифрлық музей.">
+  <title>DOMBYRA — The Soul of the Steppe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #10110f;
+      --panel: #191a17;
+      --panel-light: #20211d;
+      --gold: #d8b56d;
+      --gold-light: #f0dba9;
+      --text: #f4efe5;
+      --muted: #b7b1a5;
+      --line: rgba(216, 181, 109, .23);
+      --max: 1160px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "DM Sans", sans-serif; line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .container { width: min(var(--max), calc(100% - 40px)); margin-inline: auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 10; backdrop-filter: blur(18px);
+      background: rgba(16,17,15,.88); border-bottom: 1px solid var(--line);
+    }
+    .nav { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: flex; align-items: center; gap: 12px; letter-spacing: .16em; font-size: 14px; font-weight: 700; }
+    .brand-mark {
+      display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid var(--gold);
+      color: var(--gold); border-radius: 50%; font-family: Georgia, serif; font-size: 23px;
+    }
+    .brand small { display: block; font-size: 9px; color: var(--muted); letter-spacing: .2em; font-weight: 500; margin-top: 2px; }
+    .nav-links { display: flex; align-items: center; gap: 26px; color: var(--muted); font-size: 13px; }
+    .nav-links a:hover { color: var(--gold-light); }
+    .lang-switch { display: flex; gap: 4px; border: 1px solid var(--line); padding: 4px; border-radius: 999px; }
+    .lang-switch button { border: 0; background: transparent; color: var(--muted); cursor: pointer; border-radius: 999px; padding: 7px 9px; font-size: 11px; }
+    .lang-switch button.active { color: #171510; background: var(--gold); font-weight: 700; }
+    .hero { min-height: 660px; display: grid; grid-template-columns: 1.02fr .98fr; align-items: center; gap: 46px; padding-block: 68px 88px; }
+    .eyebrow { color: var(--gold); text-transform: uppercase; letter-spacing: .22em; font-size: 10px; font-weight: 700; display: flex; align-items: center; gap: 12px; }
+    .eyebrow::before { content: ""; width: 34px; height: 1px; background: var(--gold); }
+    h1, h2, h3 { font-family: "Playfair Display", Georgia, serif; font-weight: 500; line-height: 1.12; }
+    h1 { font-size: clamp(48px, 6.3vw, 82px); letter-spacing: -.045em; margin: 24px 0 22px; max-width: 650px; }
+    h1 span { color: var(--gold); font-style: italic; }
+    .hero-copy { color: var(--muted); font-size: 16px; max-width: 480px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 13px 18px; border-radius: 5px; font-size: 12px; font-weight: 700; transition: transform .2s, background .2s; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { color: #171510; background: var(--gold); }
+    .btn-secondary { color: var(--gold-light); border: 1px solid var(--line); }
+    .hero-note { display: flex; align-items: center; gap: 12px; margin-top: 44px; color: var(--muted); font-size: 11px; letter-spacing: .06em; }
+    .hero-note .line { width: 40px; height: 1px; background: var(--gold); }
+    .hero-art { position: relative; min-height: 480px; }
+    .hero-image {
+      position: absolute; inset: 0 18px 0 0; border-radius: 48% 48% 5px 5px;
+      background: linear-gradient(180deg, rgba(16,17,15,.03), rgba(16,17,15,.25)), url("https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=1200&q=85") center/cover;
+      filter: saturate(.68); border: 1px solid rgba(216,181,109,.28);
+    }
+    .hero-art::after { content: ""; position: absolute; inset: 15px 0 15px 15px; border: 1px solid var(--gold); border-radius: 48% 48% 5px 5px; opacity: .5; pointer-events: none; }
+    .art-label { position: absolute; right: -4px; bottom: 42px; z-index: 2; background: var(--gold); color: #171510; padding: 17px 20px; max-width: 185px; font-size: 11px; line-height: 1.5; }
+    .art-label strong { display: block; font-family: "Playfair Display", Georgia, serif; font-size: 19px; font-weight: 600; margin-bottom: 3px; }
+    .section { padding: 92px 0; border-top: 1px solid rgba(255,255,255,.06); }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 34px; }
+    .section h2 { font-size: clamp(34px, 4vw, 51px); margin: 13px 0 0; }
+    .section-intro { color: var(--muted); max-width: 420px; font-size: 13px; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { background: var(--panel); border: 1px solid rgba(255,255,255,.07); padding: 25px; min-height: 235px; transition: border-color .2s, transform .2s; }
+    .card:hover { border-color: var(--line); transform: translateY(-3px); }
+    .card-number { color: var(--gold); font-size: 11px; letter-spacing: .15em; }
+    .card h3 { font-size: 25px; margin: 27px 0 12px; }
+    .card p { color: var(--muted); font-size: 13px; margin: 0; }
+    .card-link { display: inline-block; margin-top: 22px; color: var(--gold-light); font-size: 12px; }
+    .history-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 56px; align-items: center; }
+    .history-visual { min-height: 390px; background: linear-gradient(0deg, rgba(16,17,15,.4), rgba(16,17,15,.1)), url("https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=1000&q=80") center/cover; border: 1px solid var(--line); }
+    .history-copy p { color: var(--muted); font-size: 14px; }
+    .quote { color: var(--gold-light); border-left: 2px solid var(--gold); padding-left: 18px; margin-top: 28px; font-family: "Playfair Display", Georgia, serif; font-size: 20px; }
+    .masters { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .master { background: var(--panel); padding: 22px; border-top: 1px solid var(--gold); }
+    .master .initial { color: var(--gold); font-family: "Playfair Display", Georgia, serif; font-size: 34px; }
+    .master h3 { margin: 10px 0; font-size: 23px; }
+    .master p { color: var(--muted); font-size: 13px; }
+    .music-band { background: var(--panel); border: 1px solid var(--line); padding: 30px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .music-band h3 { font-size: 28px; margin: 0 0 8px; }
+    .music-band p { color: var(--muted); font-size: 13px; margin: 0; max-width: 580px; }
+    .play-symbol { display: grid; place-items: center; flex: 0 0 56px; width: 56px; height: 56px; border-radius: 50%; background: var(--gold); color: #171510; font-size: 18px; }
+    footer { border-top: 1px solid var(--line); padding: 30px 0; color: var(--muted); font-size: 11px; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; }
+    .ornament { color: var(--gold); letter-spacing: .35em; }
+    @media (max-width: 800px) {
+      .nav { flex-wrap: wrap; padding-block: 15px; }
+      .nav-links { order: 3; width: 100%; justify-content: space-between; gap: 12px; }
+      .hero { grid-template-columns: 1fr; padding-top: 48px; gap: 28px; }
+      .hero-art { min-height: 410px; }
+      .section-head { display: block; }
+      .section-intro { margin-top: 18px; }
+      .cards, .masters { grid-template-columns: 1fr; }
+      .history-grid { grid-template-columns: 1fr; gap: 28px; }
+      .history-visual { min-height: 300px; }
+    }
+    @media (max-width: 460px) {
+      .container { width: min(100% - 28px, var(--max)); }
+      .nav-links { font-size: 11px; }
+      .hero { min-height: auto; padding-bottom: 60px; }
+      .hero-art { min-height: 330px; }
+      .art-label { right: 0; bottom: 22px; }
+      .section { padding: 65px 0; }
+      .music-band { padding: 22px; align-items: flex-start; }
+      .footer-inner { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="DOMBYRA home">
+        <span class="brand-mark">♬</span>
+        <span>DOMBYRA<small>HERITAGE • HISTORY • MUSIC</small></span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#story" data-i18n="navStory">Тарихы</a>
+        <a href="#instrument" data-i18n="navInstrument">Құрылымы</a>
+        <a href="#masters" data-i18n="navMasters">Күйшілер</a>
+        <a href="#music" data-i18n="navMusic">Музыка</a>
+      </nav>
+      <div class="lang-switch" aria-label="Choose language">
+        <button class="active" type="button" data-lang="kk">KZ</button>
+        <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="container hero" id="home">
+      <div>
+        <div class="eyebrow" data-i18n="eyebrow">ҰЛЫ ДАЛАНЫҢ ҮНІ</div>
+        <h1 data-i18n="heroTitle">Ұлы даланың <span>жаны.</span></h1>
+        <p class="hero-copy" data-i18n="heroText">Қазақ халқының үніне айналған домбыраның тарихын, күйшілерін және әуенін таныңыз.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#story"><span data-i18n="explore">Тарихқа үңілу</span> <span>↗</span></a>
+          <a class="btn btn-secondary" href="#music" data-i18n="listen">Музыканы зерттеу</a>
+        </div>
+        <div class="hero-note"><span class="line"></span><span data-i18n="heroNote">ЕКІ ІШЕК. ШЕКСІЗ ӘҢГІМЕ.</span></div>
+      </div>
+      <div class="hero-art" role="img" aria-label="Atmospheric photograph representing traditional string music">
+        <div class="hero-image"></div>
+        <div class="art-label"><strong data-i18n="artTitle">Дала мұрасы</strong><span data-i18n="artText">Ұрпақтан ұрпаққа жеткен әуен.</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="story">
+      <div class="container">
+        <div class="section-head">
+          <div><div class="eyebrow" data-i18n="discover">ЗЕРТТЕУ</div><h2 data-i18n="discoverTitle">Бір аспап. Тұтас әлем.</h2></div>
+          <p class="section-intro" data-i18n="discoverText">Домбыра — музыкалық аспап қана емес. Ол — халықтың жадын, сезімін және дүниетанымын жеткізетін мәдени мұра.</p>
+        </div>
+        <div class="cards">
+          <article class="card"><div class="card-number">01 / <span data-i18n="topicOne">ТАРИХ</span></div><h3 data-i18n="historyCardTitle">Ғасырлар үні</h3><p data-i18n="historyCardText">Домбыраның қазақ мәдениетіндегі орны мен оның ұрпақтар арасындағы сабақтастығын зерттеңіз.</p><a class="card-link" href="#history-detail" data-i18n="readMore">Толығырақ ↗</a></article>
+          <article class="card" id="instrument"><div class="card-number">02 / <span data-i18n="topicTwo">ҚҰРЫЛЫМЫ</span></div><h3 data-i18n="instrumentTitle">Ағаш пен ішек</h3><p data-i18n="instrumentText">Шанақ, мойын, пернелер мен ішектердің дыбыс жасауға қалай қатысатынын біліңіз.</p><a class="card-link" href="#history-detail" data-i18n="learnMore">Зерттеу ↗</a></article>
+          <article class="card"><div class="card-number">03 / <span data-i18n="topicThree">ДӘСТҮР</span></div><h3 data-i18n="traditionTitle">Күйдің тілі</h3><p data-i18n="traditionText">Күй арқылы оқиғалар, көңіл күй және дала өмірі қалай жеткізілетінін ашыңыз.</p><a class="card-link" href="#music" data-i18n="discoverMusic">Музыканы ашу ↗</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="history-detail">
+      <div class="container history-grid">
+        <div class="history-visual" role="img" aria-label="A musician performing on stage"></div>
+        <div class="history-copy">
+          <div class="eyebrow" data-i18n="storyEyebrow">МӘДЕНИ МҰРА</div>
+          <h2 data-i18n="historyTitle">Тарихты ішекпен айту.</h2>
+          <p data-i18n="historyText1">Домбыра — Қазақстандағы ең танымал дәстүрлі музыкалық аспаптардың бірі. Оның үні халық әндерімен, күй өнерімен және көшпелі өмір салтымен тығыз байланысты.</p>
+          <p data-i18n="historyText2">Күй — сөзсіз әңгіме айтуға мүмкіндік беретін аспаптық шығарма. Әр өңірдің орындаушылық мәнері мен музыкалық дәстүрі домбыра мәдениетінің байлығын көрсетеді.</p>
+          <div class="quote" data-i18n="quote">«Кейде бір күй мың сөзден артық айтады.»</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="masters">
+      <div class="container">
+        <div class="section-head">
+          <div><div class="eyebrow" data-i18n="mastersEyebrow">ҰЛЫ ЕСІМДЕР</div><h2 data-i18n="mastersTitle">Күй өнерінің шеберлері.</h2></div>
+          <p class="section-intro" data-i18n="mastersIntro">Қазақтың аспаптық музыкасының дамуына ықпал еткен белгілі күйшілермен танысыңыз.</p>
+        </div>
+        <div class="masters">
+          <article class="master"><div class="initial">Қ.</div><h3>Құрманғазы</h3><p data-i18n="kurmText">Қазақтың әйгілі күйші-композиторы, төкпе күй дәстүрінің көрнекті өкілі.</p></article>
+          <article class="master"><div class="initial">Д.</div><h3>Дәулеткерей</h3><p data-i18n="dauletText">Лирикалық тереңдігімен танылған, қазақтың дәстүрлі күй өнерінің көрнекті тұлғасы.</p></article>
+          <article class="master"><div class="initial">Т.</div><h3>Тәттімбет</h3><p data-i18n="tattimText">Шертпе күй дәстүрінің аса көрнекті өкілдерінің бірі.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="music">
+      <div class="container">
+        <div class="music-band">
+          <div><div class="eyebrow" data-i18n="listenEyebrow">ТЫҢДАУ ЖӘНЕ СЕЗІНУ</div><h3 data-i18n="musicTitle">Домбыраның үнін тыңдаңыз.</h3><p data-i18n="musicText">Келесі қадамда бұл бөлімге күй жазбаларын, орындаушылар туралы мәліметтерді және заңды түрде пайдалануға болатын аудио қосамыз.</p></div>
+          <a class="play-symbol" href="https://www.youtube.com/results?search_query=Kazakh+dombra+kui" target="_blank" rel="noopener noreferrer" aria-label="Find dombra music on YouTube">▶</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner"><span>© 2026 DOMBYRA — <span data-i18n="footerText">Қазақ мәдени мұрасына арналған оқу жобасы.</span></span><span class="ornament">◇ ❖ ◇</span><a href="#home" data-i18n="backTop">Жоғары ↑</a></div>
+  </footer>
+
+  <script>
+    const translations = {
+      kk: {
+        navStory:"Тарихы", navInstrument:"Құрылымы", navMasters:"Күйшілер", navMusic:"Музыка",
+        eyebrow:"ҰЛЫ ДАЛАНЫҢ ҮНІ", heroTitle:'Ұлы даланың <span>жаны.</span>',
+        heroText:"Қазақ халқының үніне айналған домбыраның тарихын, күйшілерін және әуенін таныңыз.",
+        explore:"Тарихқа үңілу", listen:"Музыканы зерттеу", heroNote:"ЕКІ ІШЕК. ШЕКСІЗ ӘҢГІМЕ.",
+        artTitle:"Дала мұрасы", artText:"Ұрпақтан ұрпаққа жеткен әуен.",
+        discover:"ЗЕРТТЕУ", discoverTitle:"Бір аспап. Тұтас әлем.",
+        discoverText:"Домбыра — музыкалық аспап қана емес. Ол — халықтың жадын, сезімін және дүниетанымын жеткізетін мәдени мұра.",
+        topicOne:"ТАРИХ", historyCardTitle:"Ғасырлар үні", historyCardText:"Домбыраның қазақ мәдениетіндегі орны мен оның ұрпақтар арасындағы сабақтастығын зерттеңіз.",
+        readMore:"Толығырақ ↗", topicTwo:"ҚҰРЫЛЫМЫ", instrumentTitle:"Ағаш пен ішек", instrumentText:"Шанақ, мойын, пернелер мен ішектердің дыбыс жасауға қалай қатысатынын біліңіз.",
+        learnMore:"Зерттеу ↗", topicThree:"ДӘСТҮР", traditionTitle:"Күйдің тілі", traditionText:"Күй арқылы оқиғалар, көңіл күй және дала өмірі қалай жеткізілетінін ашыңыз.",
+        discoverMusic:"Музыканы ашу ↗", storyEyebrow:"МӘДЕНИ МҰРА", historyTitle:"Тарихты ішекпен айту.",
+        historyText1:"Домбыра — Қазақстандағы ең танымал дәстүрлі музыкалық аспаптардың бірі. Оның үні халық әндерімен, күй өнерімен және көшпелі өмір салтымен тығыз байланысты.",
+        historyText2:"Күй — сөзсіз әңгіме айтуға мүмкіндік беретін аспаптық шығарма. Әр өңірдің орындаушылық мәнері мен музыкалық дәстүрі домбыра мәдениетінің байлығын көрсетеді.",
+        quote:"«Кейде бір күй мың сөзден артық айтады.»", mastersEyebrow:"ҰЛЫ ЕСІМДЕР", mastersTitle:"Күй өнерінің шеберлері.",
+        mastersIntro:"Қазақтың аспаптық музыкасының дамуына ықпал еткен белгілі күйшілермен танысыңыз.",
+        kurmText:"Қазақтың әйгілі күйші-композиторы, төкпе күй дәстүрінің көрнекті өкілі.",
+        dauletText:"Лирикалық тереңдігімен танылған, қазақтың дәстүрлі күй өнерінің көрнекті тұлғасы.",
+        tattimText:"Шертпе күй дәстүрінің аса көрнекті өкілдерінің бірі.",
+        listenEyebrow:"ТЫҢДАУ ЖӘНЕ СЕЗІНУ", musicTitle:"Домбыраның үнін тыңдаңыз.",
+        musicText:"Келесі қадамда бұл бөлімге күй жазбаларын, орындаушылар туралы мәліметтерді және заңды түрде пайдалануға болатын аудио қосамыз.",
+        footerText:"Қазақ мәдени мұрасына арналған оқу жобасы.", backTop:"Жоғары ↑"
+      },
+      ru: {
+        navStory:"История", navInstrument:"Устройство", navMasters:"Кюйши", navMusic:"Музыка",
+        eyebrow:"ГОЛОС ВЕЛИКОЙ СТЕПИ", heroTitle:'Душа <span>Великой степи.</span>',
+        heroText:"Откройте историю домбры — инструмента, ставшего голосом казахского народа, — и познакомьтесь с кюйши и музыкой.",
+        explore:"Изучить историю", listen:"Открыть музыку", heroNote:"ДВЕ СТРУНЫ. БЕСКОНЕЧНАЯ ИСТОРИЯ.",
+        artTitle:"Наследие степи", artText:"Мелодия, передаваемая из поколения в поколение.",
+        discover:"ИССЛЕДОВАТЬ", discoverTitle:"Один инструмент. Целый мир.",
+        discoverText:"Домбра — не просто музыкальный инструмент. Это культурное наследие, передающее память, чувства и мировоззрение народа.",
+        topicOne:"ИСТОРИЯ", historyCardTitle:"Голос веков", historyCardText:"Узнайте о месте домбры в казахской культуре и о том, как традиция передавалась между поколениями.",
+        readMore:"Подробнее ↗", topicTwo:"УСТРОЙСТВО", instrumentTitle:"Дерево и струны", instrumentText:"Узнайте, как корпус, гриф, лады и струны помогают создавать звук.",
+        learnMore:"Исследовать ↗", topicThree:"ТРАДИЦИЯ", traditionTitle:"Язык кюя", traditionText:"Откройте, как через кюй передаются события, эмоции и жизнь степи.",
+        discoverMusic:"К музыке ↗", storyEyebrow:"КУЛЬТУРНОЕ НАСЛЕДИЕ", historyTitle:"Рассказывать историю струнами.",
+        historyText1:"Домбра — один из самых узнаваемых традиционных музыкальных инструментов Казахстана. Её звучание тесно связано с народными песнями, искусством кюя и кочевым образом жизни.",
+        historyText2:"Кюй — инструментальное произведение, способное рассказывать истории без слов. Исполнительские стили и музыкальные традиции разных регионов показывают богатство культуры домбры.",
+        quote:"«Иногда один кюй говорит больше тысячи слов.»", mastersEyebrow:"ВЕЛИКИЕ ИМЕНА", mastersTitle:"Мастера искусства кюя.",
+        mastersIntro:"Познакомьтесь с известными кюйши, повлиявшими на развитие казахской инструментальной музыки.",
+        kurmText:"Знаменитый казахский композитор-кюйши и выдающийся представитель традиции токпе-кюй.",
+        dauletText:"Выдающаяся фигура казахского кюйного искусства, известная лирической глубиной произведений.",
+        tattimText:"Один из наиболее значимых представителей традиции шертпе-кюй.",
+        listenEyebrow:"СЛУШАТЬ И ЧУВСТВОВАТЬ", musicTitle:"Послушайте звучание домбры.",
+        musicText:"На следующем этапе мы добавим записи кюев, сведения об исполнителях и аудио, которое разрешено использовать.",
+        footerText:"Учебный проект о культурном наследии Казахстана.", backTop:"Наверх ↑"
+      },
+      en: {
+        navStory:"History", navInstrument:"Instrument", navMasters:"Masters", navMusic:"Music",
+        eyebrow:"THE VOICE OF THE GREAT STEPPE", heroTitle:'The soul of the <span>Great Steppe.</span>',
+        heroText:"Discover the history of the dombra, an instrument deeply woven into Kazakh culture, and explore its musicians and melodies.",
+        explore:"Explore history", listen:"Discover the music", heroNote:"TWO STRINGS. ENDLESS STORIES.",
+        artTitle:"Steppe heritage", artText:"A melody passed from generation to generation.",
+        discover:"DISCOVER", discoverTitle:"One instrument. A whole world.",
+        discoverText:"The dombra is more than a musical instrument. It is a cultural heritage carrying the memory, emotions and worldview of a people.",
+        topicOne:"HISTORY", historyCardTitle:"Echoes of centuries", historyCardText:"Explore the dombra's place in Kazakh culture and how its traditions have passed between generations.",
+        readMore:"Read more ↗", topicTwo:"ANATOMY", instrumentTitle:"Wood and strings", instrumentText:"Learn how the body, neck, frets and strings work together to create its sound.",
+        learnMore:"Explore ↗", topicThree:"TRADITION", traditionTitle:"The language of kui", traditionText:"Discover how kui can express stories, emotions and the life of the steppe.",
+        discoverMusic:"Discover music ↗", storyEyebrow:"CULTURAL HERITAGE", historyTitle:"Telling stories through strings.",
+        historyText1:"The dombra is one of Kazakhstan's best-known traditional musical instruments. Its sound is closely connected with folk songs, the art of kui and nomadic life.",
+        historyText2:"A kui is an instrumental composition that can tell a story without words. Regional performance styles and musical traditions reveal the richness of dombra culture.",
+        quote:"“Sometimes a single kui says more than a thousand words.”", mastersEyebrow:"LEGACY & MASTERS", mastersTitle:"Masters of the kui tradition.",
+        mastersIntro:"Meet renowned composers and performers who shaped Kazakh instrumental music.",
+        kurmText:"A celebrated Kazakh composer and dombra player, and a leading figure in the tokpe-kui tradition.",
+        dauletText:"An important figure in Kazakh kui, known for the lyrical depth of his compositions.",
+        tattimText:"One of the most prominent representatives of the shertpe-kui tradition.",
+        listenEyebrow:"LISTEN & FEEL", musicTitle:"Hear the sound of the dombra.",
+        musicText:"In the next stage, we will add kui recordings, performer information and audio that is licensed for use.",
+        footerText:"An educational project celebrating Kazakh cultural heritage.", backTop:"Back to top ↑"
+      }
+    };
+
+    function setLanguage(lang) {
+      const dictionary = translations[lang] || translations.kk;
+      document.documentElement.lang = lang;
+      document.querySelectorAll("[data-i18n]").forEach((element) => {
+        const key = element.dataset.i18n;
+        if (dictionary[key]) element.innerHTML = dictionary[key];
+      });
+      document.querySelectorAll("[data-lang]").forEach((button) => {
+        const active = button.dataset.lang === lang;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+    }
+
+    document.querySelectorAll("[data-lang]").forEach((button) => {
+      button.addEventListener("click", () => setLanguage(button.dataset.lang));
+    });
+    setLanguage("kk");
+  </script>
+</body>
+</html>
